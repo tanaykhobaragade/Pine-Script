@@ -1,0 +1,30 @@
+//@version=5
+indicator("Upper and Lower Circuit", overlay=true)
+
+// Function to fetch previous day's close price
+getPreviousClose() =>
+    float previousClose = na
+    previousClose := request.security(syminfo.tickerid, "D", close[1], lookahead=barmerge.lookahead_on)
+    previousClose
+
+// Input variables
+upperCircuitPercent = input(10, title="Upper Circuit Percentage")
+lowerCircuitPercent = input(10, title="Lower Circuit Percentage")
+
+// Calculate upper and lower circuit levels
+previousClose = getPreviousClose()
+upperCircuit = previousClose * (1 + upperCircuitPercent / 100)
+lowerCircuit = previousClose * (1 - lowerCircuitPercent / 100)
+
+// Create lines only once
+var line upperLine = na
+var line lowerLine = na
+
+if na(upperLine)
+    upperLine := line.new(x1=bar_index, y1=upperCircuit, x2=bar_index + 1, y2=upperCircuit, color=color.green, width=1, style=line.style_dashed, extend = extend.right)
+    lowerLine := line.new(x1=bar_index, y1=lowerCircuit, x2=bar_index + 1, y2=lowerCircuit, color=color.red, width=1, style=line.style_dashed, extend =  extend.right)
+else
+    line.set_xy1(upperLine, x=bar_index[1], y=upperCircuit)
+    line.set_xy2(upperLine, x=bar_index, y=upperCircuit)
+    line.set_xy1(lowerLine, x=bar_index[1], y=lowerCircuit)
+    line.set_xy2(lowerLine, x=bar_index, y=lowerCircuit)
