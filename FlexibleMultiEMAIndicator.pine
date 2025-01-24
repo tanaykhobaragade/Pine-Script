@@ -1,0 +1,56 @@
+//@version=5
+indicator("Flexible Multi-EMA Indicator", overlay=true)
+
+// EMA Period Inputs
+input10 = input.bool(false, title="Show 10 EMA", group="EMA Periods")
+input20 = input.bool(false, title="Show 20 EMA", group="EMA Periods")
+input30 = input.bool(false, title="Show 30 EMA", group="EMA Periods")
+input40 = input.bool(false, title="Show 40 EMA", group="EMA Periods")
+input50 = input.bool(true, title="Show 50 EMA", group="EMA Periods")
+input60 = input.bool(false, title="Show 60 EMA", group="EMA Periods")
+input70 = input.bool(false, title="Show 70 EMA", group="EMA Periods")
+input80 = input.bool(false, title="Show 80 EMA", group="EMA Periods")
+input90 = input.bool(false, title="Show 90 EMA", group="EMA Periods")
+input100 = input.bool(false, title="Show 100 EMA", group="EMA Periods")
+
+// Price Type Selection
+priceType = input.string("Close", title="Price Type", options=["Close", "Open"], group="Price Configuration")
+
+// Color Inputs for Each EMA
+color10 = input.color(color.blue, title="10 EMA Color", group="EMA Colors")
+color20 = input.color(color.red, title="20 EMA Color", group="EMA Colors")
+color30 = input.color(color.green, title="30 EMA Color", group="EMA Colors")
+color40 = input.color(color.purple, title="40 EMA Color", group="EMA Colors")
+color50 = input.color(color.orange, title="50 EMA Color", group="EMA Colors")
+color60 = input.color(color.teal, title="60 EMA Color", group="EMA Colors")
+color70 = input.color(color.maroon, title="70 EMA Color", group="EMA Colors")
+color80 = input.color(color.navy, title="80 EMA Color", group="EMA Colors")
+color90 = input.color(color.olive, title="90 EMA Color", group="EMA Colors")
+color100 = input.color(color.silver, title="100 EMA Color", group="EMA Colors")
+
+// Determine which price to use
+price = priceType == "Close" ? close : open
+
+// Calculate EMAs
+ema10 = ta.ema(price, 10)
+ema20 = ta.ema(price, 20)
+ema30 = ta.ema(price, 30)
+ema40 = ta.ema(price, 40)
+ema50 = ta.ema(price, 50)
+ema60 = ta.ema(price, 60)
+ema70 = ta.ema(price, 70)
+ema80 = ta.ema(price, 80)
+ema90 = ta.ema(price, 90)
+ema100 = ta.ema(price, 100)
+
+// Plot EMAs with conditional visibility and custom colors
+plot(input10 ? ema10 : na, color=color10, title="10 EMA")
+plot(input20 ? ema20 : na, color=color20, title="20 EMA")
+plot(input30 ? ema30 : na, color=color30, title="30 EMA")
+plot(input40 ? ema40 : na, color=color40, title="40 EMA")
+plot(input50 ? ema50 : na, color=color50, title="50 EMA")
+plot(input60 ? ema60 : na, color=color60, title="60 EMA")
+plot(input70 ? ema70 : na, color=color70, title="70 EMA")
+plot(input80 ? ema80 : na, color=color80, title="80 EMA")
+plot(input90 ? ema90 : na, color=color90, title="90 EMA")
+plot(input100 ? ema100 : na, color=color100, title="100 EMA")
